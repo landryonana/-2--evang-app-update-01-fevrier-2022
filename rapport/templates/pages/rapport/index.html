@@ -190,7 +190,12 @@ ASSEMBLE EAUX PAISIBLES | Evangélisations | Rapport
 
             <div class="row">
                 <button class="btn btn-info" id="pdf" onclick="generatePDF()">PDF 1</button>
-                <a class="btn btn-info ml-2" href="{% url 'rapport:generate_pdf' %}">PDF 2</a>
+                <a class="btn btn-info ml-2" href="{% if annee %}
+                        {% url 'rapport:generate_pdf' annee %}
+                    {% else %}
+                        {% url 'rapport:generate_pdf' %}
+                    {% endif %}
+                ">PDF 2</a>
             </div>
             <div class="wrapper-stat-evang-evangstatistq">
                 <div class="row">
