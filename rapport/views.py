@@ -59,11 +59,17 @@ def link_callback(uri, rel):
 
 
 
-def generate_pdf(request):
-    all_evang = get_personne_evang_all_by__year(date.today().year)
+def generate_pdf(request, annee=None):
+    context = dict()
+    if annee:
+        all_evang = get_personne_evang_all_by__year(annee)
+        context['annee'] = annee
+    else:
+        all_evang = get_personne_evang_all_by__year(date.today().year)
+        context['annee'] = date.today().year
     total = get_personne_total(all_evang)
     liste_oui_by_mois = get_stat_oui_jesus_by_mois(all_evang)
-    context = dict()
+    
     context['janvier_oui'] = liste_oui_by_mois[0]
     context['fevrier_oui'] = liste_oui_by_mois[1]
     context['mars_oui'] = liste_oui_by_mois[2]
@@ -78,7 +84,7 @@ def generate_pdf(request):
     context['decembre_oui'] = liste_oui_by_mois[11]
     #===========+++END++++
     context['total'] = total
-    context['annee'] = date.today().year
+    
     context['all'] = True
     context['all_evang'] = all_evang
     
